@@ -5,3 +5,17 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+# Välj vilka regler som ska gälla (E/W = Pycodestyle, F = Pyflakes, I = Isort)
+select = ["E", "F", "W", "I"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
