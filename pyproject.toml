@@ -11,7 +11,6 @@ target-version = "py311"
 src = ["src"]
 
 [tool.ruff.lint]
-# Välj vilka regler som ska gälla (E/W = Pycodestyle, F = Pyflakes, I = Isort)
 select = ["E", "F", "W", "I"]
 ignore = []
 
