@@ -1,0 +1,12 @@
+services:
+  trading-bot:
+    build: .
+    container_name: asian_baseball_bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=/app/data/trading.db
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
