@@ -2,8 +2,9 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
-from odds_api_client import OddsApiClient
 from schema import Bookmaker, Event, League, OddsEntry, Sport
+
+from odds_api_client import OddsApiClient
 
 
 class OddsTracker:

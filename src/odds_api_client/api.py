@@ -1,7 +1,6 @@
 from typing import Any, Optional
 
 import requests
-
 from constants import Endpoints
 from exceptions import (
     InvalidAPIKeyError,
