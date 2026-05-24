@@ -17,7 +17,7 @@ from exceptions import (
 class OddsApiClient:
     def __init__(
         self,
-        api_key: str,
+        api_key: str | None,
         timeout: int = 5,
         base_url: str = "https://api2.odds-api.io/v3",
     ):
@@ -50,7 +50,7 @@ class OddsApiClient:
             raise OddsAPIError(f"API error {status}: {response.text}")
 
     @staticmethod
-    def _build_params(**kwargs) -> dict[str, Any]:
+    def _build_params(**kwargs: Any) -> dict[str, Any]:
         """Build parameter dictionary, excluding None values and converting bools."""
         params = {}
         for k, v in kwargs.items():

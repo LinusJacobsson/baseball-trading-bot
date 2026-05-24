@@ -1,7 +1,7 @@
 import time
 
 
-def main():
+def main() -> None:
     iteration = 0
     while True:
         print(f"Iteration: {iteration}")
