@@ -1,5 +1,5 @@
 from typing import Any, Optional
-
+import time
 import requests
 from constants import Endpoints
 from exceptions import (
@@ -9,7 +9,7 @@ from exceptions import (
     RateLimitExceededError,
     ValidationError,
 )
-
+import os
 
 class OddsApiClient:
     def __init__(
@@ -217,10 +217,19 @@ class OddsApiClient:
         """Close the HTTP session."""
         self.session.close()
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         """Context manager entry."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Context manager exit."""
         self.close()
+
+def main() -> None:
+    API_KEY = os.getenv("ODDS_API_KEY")
+    client = OddsApiClient(api_key=API_KEY)
+    while True:
+        print(client.get_bookmakers())
+        time.sleep(5)
+if __name__ == "__main__":
+    main()
