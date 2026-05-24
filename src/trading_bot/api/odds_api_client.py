@@ -1,6 +1,7 @@
 import os
 import time
-from typing import Any, Optional
+from types import TracebackType
+from typing import Any, Optional, Self
 
 import requests
 from constants import Endpoints
@@ -75,7 +76,7 @@ class OddsApiClient:
 
         return self._handle_response(response)
 
-    def get_sports(self) -> list[dict[str, Any]]:
+    def get_sports(self) -> Any:
         """
         Get all available sports.
 
@@ -96,7 +97,7 @@ class OddsApiClient:
         participant_id: Optional[int] = None,
         status: Optional[str] = None,
         bookmaker: Optional[str] = None,
-    ) -> list[dict[str, Any]]:
+    ) -> Any:
         """
         Get events with optional filters.
 
@@ -129,7 +130,7 @@ class OddsApiClient:
 
         return self._get(Endpoints.GET_EVENTS, params)
 
-    def get_event_by_id(self, event_id: int) -> dict[str, Any]:
+    def get_event_by_id(self, event_id: int) -> Any:
         """
         Get a specific event by ID.
 
@@ -145,7 +146,7 @@ class OddsApiClient:
         path = Endpoints.GET_EVENT_BY_ID.format(id=event_id)
         return self._get(path)
 
-    def get_live_events(self, sport: str) -> list[dict[str, Any]]:
+    def get_live_events(self, sport: str) -> Any:
         """
         Get currently live events for a sport.
 
@@ -161,7 +162,7 @@ class OddsApiClient:
         params = self._build_params(sport=sport)
         return self._get(Endpoints.GET_LIVE_EVENTS, params)
 
-    def get_event_odds(self, event_id: str, bookmakers: str) -> dict[str, Any]:
+    def get_event_odds(self, event_id: str, bookmakers: str) -> Any:
         """
         Get odds for a specific event.
 
@@ -183,7 +184,7 @@ class OddsApiClient:
 
     def get_odds_for_multiple_events(
         self, event_ids: str, bookmakers: str
-    ) -> list[dict[str, Any]]:
+    ) -> Any:
         """
         Get odds for multiple events at once.
 
@@ -203,7 +204,7 @@ class OddsApiClient:
         params = self._build_params(eventIds=event_ids, bookmakers=bookmakers)
         return self._get(Endpoints.GET_ODDS_FOR_MULTIPLE_EVENTS, params)
 
-    def get_bookmakers(self) -> list[dict[str, Any]]:
+    def get_bookmakers(self) -> Any:
         """
         Get all available bookmakers.
 
@@ -219,11 +220,16 @@ class OddsApiClient:
         """Close the HTTP session."""
         self.session.close()
 
-    def __enter__(self) -> None:
+    def __enter__(self) -> Self:
         """Context manager entry."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
         """Context manager exit."""
         self.close()
 
