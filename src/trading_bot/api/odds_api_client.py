@@ -1,5 +1,7 @@
-from typing import Any, Optional
+import os
 import time
+from typing import Any, Optional
+
 import requests
 from constants import Endpoints
 from exceptions import (
@@ -9,7 +11,7 @@ from exceptions import (
     RateLimitExceededError,
     ValidationError,
 )
-import os
+
 
 class OddsApiClient:
     def __init__(
