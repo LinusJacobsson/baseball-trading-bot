@@ -4,16 +4,15 @@ from types import TracebackType
 from typing import Any, Optional, Self
 
 import requests
-from constants import Endpoints
-from exceptions import (
+from trading_bot.api.constants import Endpoints
+from trading_bot.api.exceptions import (
     InvalidAPIKeyError,
     NotFoundError,
     OddsAPIError,
     RateLimitExceededError,
     ValidationError,
 )
-
-
+from trading_bot.api.schema import Event
 class OddsApiClient:
     def __init__(
         self,
@@ -61,6 +60,7 @@ class OddsApiClient:
                 params[k] = str(v).lower()
             else:
                 params[k] = v
+        print(f"Params used: {params}")
         return params
 
     def _get(self, path: str, params: Optional[dict[str, Any]] = None) -> Any:
@@ -97,7 +97,7 @@ class OddsApiClient:
         participant_id: Optional[int] = None,
         status: Optional[str] = None,
         bookmaker: Optional[str] = None,
-    ) -> Any:
+    ) -> list[Event]:
         """
         Get events with optional filters.
 
@@ -128,7 +128,8 @@ class OddsApiClient:
             bookmaker=bookmaker,
         )
 
-        return self._get(Endpoints.GET_EVENTS, params)
+        response =  self._get(Endpoints.GET_EVENTS, params)
+        return [Event.model_validate(data) for data in response]
 
     def get_event_by_id(self, event_id: int) -> Any:
         """
@@ -137,7 +138,7 @@ class OddsApiClient:
         Args:
             event_id: The event ID
 
-        Returns:
+       Returns:
             Event details
 
         Example:
