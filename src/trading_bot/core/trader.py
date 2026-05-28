@@ -21,7 +21,10 @@ class Trader:
 
 
     def get_matches(self, sport: Sport,  game_state: GameState) -> list[Any]:
-        incoming_events = self.odds_api_client.get_events(status=game_state.value, sport=sport.value)
+        incoming_events = self.odds_api_client.get_events(
+            status=game_state.value,
+            sport=sport.value
+        )
         for event in incoming_events:
             if event.id not in self.matches:
                 print(f"Adding event: {event.id} to tracked matches")
