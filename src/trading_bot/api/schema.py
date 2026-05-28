@@ -1,4 +1,4 @@
-from typing import Optional, TypeAlias
+from typing import Optional, TypeAlias, Any
 
 from pydantic import BaseModel, model_validator
 
@@ -51,7 +51,7 @@ class Event(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def transform_event_data(cls, data):
+    def transform_event_data(cls, data: dict[str, Any]) -> dict[str, Any]:
         # Convert id to string if it's an int
         if isinstance(data["id"], int):
             data["id"] = str(data["id"])

@@ -2,7 +2,7 @@ import os
 import time
 from enum import Enum
 from typing import Any
-
+from trading_bot.api.schema import Event
 from trading_bot.api.odds_api_client import OddsApiClient
 
 
@@ -17,10 +17,10 @@ class Sport(str, Enum):
 class Trader:
     def __init__(self, odds_api_client: OddsApiClient) -> None:
         self.odds_api_client = odds_api_client
-        self.matches = {}
+        self.matches: dict[str, Event] = {}
 
 
-    def get_matches(self, sport: Sport,  game_state: GameState) -> list[Any]:
+    def get_matches(self, sport: Sport,  game_state: GameState) -> None:
         incoming_events = self.odds_api_client.get_events(
             status=game_state.value,
             sport=sport.value
