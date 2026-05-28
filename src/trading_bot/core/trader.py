@@ -1,9 +1,9 @@
 import os
 import time
 from enum import Enum
-from typing import Any
-from trading_bot.api.schema import Event
+
 from trading_bot.api.odds_api_client import OddsApiClient
+from trading_bot.api.schema import Event
 
 
 class GameState(str, Enum):

@@ -1,4 +1,4 @@
-from typing import Optional, TypeAlias, Any
+from typing import Any, Optional, TypeAlias
 
 from pydantic import BaseModel, model_validator
 
