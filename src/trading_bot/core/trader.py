@@ -4,7 +4,7 @@ from enum import Enum
 
 from trading_bot.api.odds_api_client import OddsApiClient
 from trading_bot.api.schema import Event
-
+from trading_bot.core.config import settings
 
 class GameState(str, Enum):
     PENDING = "pending"
@@ -36,8 +36,7 @@ class Trader:
 
 
 if __name__ == "__main__":
-    API_KEY = os.getenv("ODDS_API_KEY")
-    client = OddsApiClient(api_key=API_KEY)
+    client = OddsApiClient(api_key=settings.odds_api_key)
     trader = Trader(odds_api_client=client)
     while True:
         trader.get_matches(sport=Sport.BASEBALL, game_state=GameState.PENDING)
