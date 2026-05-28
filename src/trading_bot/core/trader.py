@@ -1,10 +1,10 @@
-import os
 import time
 from enum import Enum
 
 from trading_bot.api.odds_api_client import OddsApiClient
 from trading_bot.api.schema import Event
 from trading_bot.core.config import settings
+
 
 class GameState(str, Enum):
     PENDING = "pending"
