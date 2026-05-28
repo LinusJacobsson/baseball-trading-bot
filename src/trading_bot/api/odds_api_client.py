@@ -4,6 +4,7 @@ from types import TracebackType
 from typing import Any, Optional, Self
 
 import requests
+
 from trading_bot.api.constants import Endpoints
 from trading_bot.api.exceptions import (
     InvalidAPIKeyError,
@@ -13,6 +14,8 @@ from trading_bot.api.exceptions import (
     ValidationError,
 )
 from trading_bot.api.schema import Event
+
+
 class OddsApiClient:
     def __init__(
         self,
