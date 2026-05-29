@@ -13,7 +13,7 @@ from trading_bot.api.exceptions import (
     RateLimitExceededError,
     ValidationError,
 )
-from trading_bot.api.schema import Event
+from trading_bot.api.schema import Event, EventOdds
 
 
 class OddsApiClient:
@@ -132,6 +132,7 @@ class OddsApiClient:
         )
 
         response =  self._get(Endpoints.GET_EVENTS, params)
+        print(f"Response: {response}")
         return [Event.model_validate(data) for data in response]
 
     def get_event_by_id(self, event_id: int) -> Any:
@@ -184,7 +185,9 @@ class OddsApiClient:
             ... )
         """
         params = self._build_params(eventId=event_id, bookmakers=bookmakers)
-        return self._get(Endpoints.GET_EVENT_ODDS, params)
+        response = self._get(Endpoints.GET_EVENT_ODDS, params)
+        print(f"Raw Odds response: {response}")
+        return EventOdds.model_validate(response)
 
     def get_odds_for_multiple_events(
         self, event_ids: str, bookmakers: str

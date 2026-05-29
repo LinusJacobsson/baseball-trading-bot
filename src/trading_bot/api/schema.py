@@ -1,20 +1,32 @@
-from typing import Any, Optional, TypeAlias
-
-from pydantic import BaseModel, model_validator
+from typing import Any, Optional, TypeAlias, Literal
+from datetime import datetime
+from pydantic import BaseModel, model_validator, Field, field_validator
 
 BookMakerName: TypeAlias = str
 
 
-class Odds(BaseModel):
-    home_win: float
-    away_win: float
+class MoneylineOdds(BaseModel):
+    home: float
+    away: float
 
+class SpreadOdds(BaseModel):
+    hdp: float
+    home: float
+    away: float
+
+class TotalsOdds(BaseModel):
+    hdp: float
+    over: float
+    under: float
 
 class OddsEntry(BaseModel):
-    name: str
-    odds: Odds
-    update_time: str
+    name: Literal["ML", "Spread", "Totals"]
+    updated_at: datetime = Field(alias="updatedAt") 
+    odds: list[MoneylineOdds | SpreadOdds | TotalsOdds]
 
+    @property
+    def current_odds(self) -> MoneylineOdds | SpreadOdds | TotalsOdds:
+        return self.odds[0]
 
 class Bookmaker(BaseModel):
     name: str
@@ -76,3 +88,17 @@ class Event(BaseModel):
         data["league"]["sport"] = data["sport"]
 
         return data
+
+class EventOdds(BaseModel):
+    id: str
+    home: str
+    away: str
+    date: datetime
+    status: str
+
+    bookmakers: dict[str, list[OddsEntry]]
+
+    @field_validator("id", mode="before")
+    @classmethod
+    def id_to_string(cls, v: int | str) -> str:
+        return str(v)
