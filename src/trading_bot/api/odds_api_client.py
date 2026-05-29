@@ -167,7 +167,7 @@ class OddsApiClient:
         params = self._build_params(sport=sport)
         return self._get(Endpoints.GET_LIVE_EVENTS, params)
 
-    def get_event_odds(self, event_id: str, bookmakers: str) -> Any:
+    def get_event_odds(self, event_id: str, bookmakers: list[str]) -> EventOdds:
         """
         Get odds for a specific event.
 

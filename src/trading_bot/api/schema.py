@@ -1,6 +1,7 @@
-from typing import Any, Optional, TypeAlias, Literal
 from datetime import datetime
-from pydantic import BaseModel, model_validator, Field, field_validator
+from typing import Any, Literal, Optional, TypeAlias
+
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 BookMakerName: TypeAlias = str
 
@@ -21,7 +22,7 @@ class TotalsOdds(BaseModel):
 
 class OddsEntry(BaseModel):
     name: Literal["ML", "Spread", "Totals"]
-    updated_at: datetime = Field(alias="updatedAt") 
+    updated_at: datetime = Field(alias="updatedAt")
     odds: list[MoneylineOdds | SpreadOdds | TotalsOdds]
 
     @property
